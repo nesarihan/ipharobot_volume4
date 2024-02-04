@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo ""
+echo "This script copies a udev rule to /etc to facilitate bootstraping"
+echo "up the ipharobot usb connection."
+echo ""
+
+sudo cp `rospack find ipharobotv4_bootstrap`/99-ipharobot-cdc.rules /etc/udev/rules.d/
+
+echo ""
+echo "Reload rules"
+echo ""
+sudo udevadm control --reload-rules
+sudo udevadm trigger

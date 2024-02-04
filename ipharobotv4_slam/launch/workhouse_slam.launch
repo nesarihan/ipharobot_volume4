@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find ipharobotv4_simulation)/launch/workhouse.launch"/>
+       
+        <param name="robot_description" command="$(find xacro)/xacro $(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro"/>
+    
+    <!-- Gmapping -->
+    <node pkg="gmapping" type="slam_gmapping" name="ipharobotv4_slam_gmapping" output="screen">
+        <param name="base_frame" value="robot_footprint"/>
+        <param name="odom_frame" value="odom"/>
+        <param name="map_frame"  value="map"/>
+        <remap from="/scan" to="/ipharobotv4/scan"/> 
+        <rosparam command="load" file="$(find ipharobotv4_slam)/config/gmapping_params.yaml" />
+    </node>
+    
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find ipharobotv4_slam)/rviz/ipharobotv4_gmapping.rviz"/>
+
+    <node name="ipharobot_teleop" pkg="ipharobotv4_teleop" type="ipharobot_teleop_key" output="screen"/>
+    
+</launch>

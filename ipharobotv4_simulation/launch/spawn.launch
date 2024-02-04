@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" default="ipharobotv4" />
+    <arg name="robot_pose" default="-x 0.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0" />
+
+    <group ns="$(arg robot_name)">
+        <param name="robot_description" command="$(find xacro)/xacro '$(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro'"/>
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+			<param name="publish_frequency" type="double" value="30.0" />			
+		</node>
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model  $(arg robot_name)  -param robot_description $(arg robot_pose)" output="screen"/>
+    </group>
+</launch>
+
+
+
+
+    
+    
+    
+    

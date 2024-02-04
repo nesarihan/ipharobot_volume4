@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="map_file" default="$(find ipharobotv4_navigation)/maps/map.yaml"/>
+
+    <include file="$(find ipharobotv4_simulation)/launch/workhouse.launch"/>
+       
+    <param name="robot_description" command="$(find xacro)/xacro $(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+			<param name="publish_frequency" type="double" value="30.0" />			
+		</node>
+    
+    <!-- Map server -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+    
+    <!-- AMCL Localization -->
+    <include file="$(find ipharobotv4_navigation)/launch/amcl.launch"/>
+
+    <!-- Move Base -->
+    <include file="$(find ipharobotv4_navigation)/launch/move_base.launch"/>
+
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find ipharobotv4_navigation)/rviz/ipharobotv4_navigation.rviz"/>
+
+
+</launch>

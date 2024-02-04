@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="ipharobotv4_zed_camera01">
+        <link name="zed_camera_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://ipharobotv4_description/meshes/IPHARobot_Zedmini_Camera.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.0305 0.01245 0.0265" />
+                </geometry>
+            </collision>
+            <xacro:box_inertial x="0.0305" y="0.01245" z="0.0265" mass="0.5" />
+        </link>
+        <joint name="zed_camera_joint" type="fixed" >
+            <origin xyz="0 -0.321 0.230905" rpy="0 0 0" />
+            <parent link="base_link"/>
+            <child link="zed_camera_link"/>
+        </joint>
+
+        <!--Zed_Camera Dept Camera Plugin -->
+        <gazebo reference="zed_camera_link" >
+            <material value="Gazebo/Yellow" />
+            <sensor name="depth_camera" type="depth" >
+                <update_rate>30.0</update_rate>
+                <!-- math.atan(320 / 687.8065795898438) * 2 -->
+                <camera name="zed_camera" >
+                    <pose>0 0 0 0 0 -1.570796</pose>
+                    <horizontal_fov>1.3962634</horizontal_fov>
+                    <image>
+                        <width>640</width>
+                        <height>480</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.02</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <!-- Noise is sampled independently per pixel on each frame.
+                        That pixel's noise value is added to each of its color
+                        channels, which at that point lie in the range [0,1]. -->
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+                <plugin name="depth_camera_controller" filename="libgazebo_ros_depth_camera.so" >
+                    <baseline>0.2</baseline>
+                    <alwaysOn>true</alwaysOn>
+                    <visualize>true</visualize>
+                    <updateRate>0.0</updateRate>
+                    <robotNamespace>ipharobotv4</robotNamespace>
+                    <cameraName>zed_camera</cameraName>
+                    <imageTopicName>/zed_camera/color/image_raw</imageTopicName>
+                    <cameraInfoTopicName>/zed_camera/color/camera_info</cameraInfoTopicName>
+                    <depthImageTopicName>/zed_camera/depth/image_raw</depthImageTopicName>
+                    <depthImageInfoTopicName>/zed_camera/depth/camera_info</depthImageInfoTopicName>
+                    <pointCloudTopicName>/zed_camera/depth/points</pointCloudTopicName>
+                    <frameName>zed_camera_link</frameName>
+                    <pointCloudCutoff>0.5</pointCloudCutoff>
+                    <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+                    <distortionK1>0.0</distortionK1>
+                    <distortionK2>0.0</distortionK2>
+                    <distortionK3>0.0</distortionK3>
+                    <distortionT1>0.0</distortionT1>
+                    <distortionT2>0.0</distortionT2>
+                    <CxPrime>0</CxPrime>
+                    <Cx>0</Cx>
+                    <Cy>0</Cy>
+                    <focalLength>0</focalLength>
+                    <hackBaseline>0</hackBaseline>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+</robot>

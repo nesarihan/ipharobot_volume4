@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="ipharobotv4_teleop" type="ipharobot_teleop_key" name="ipharobot_teleop" respawn="true" output="screen"/>
+</launch>

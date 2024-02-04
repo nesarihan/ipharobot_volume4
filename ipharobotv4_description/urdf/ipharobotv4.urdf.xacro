@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="ipharobotv4" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_base.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_inertia.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_wheel.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_lidar.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_camera.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_imu.xacro" />
+    <xacro:include filename="$(find ipharobotv4_description)/urdf/ipharobotv4_skid_steer.xacro" />
+
+    <!-- Chassis -->
+    <xacro:ipharobotv4_base />
+
+    <!-- Wheels -->
+    <xacro:ipharobotv4_wheel xyz_pose="0.29462 -0.163 0.0" rpy_pose="-1.570796 0 0" side1="right" side2="front" />
+    <xacro:ipharobotv4_wheel xyz_pose="-0.29462 -0.163 0.0" rpy_pose="-1.570796 0 0" side1="left" side2="front" />
+    <xacro:ipharobotv4_wheel xyz_pose="0.29462 0.163 0.0" rpy_pose="-1.570796 0 0" side1="right" side2="back" />
+    <xacro:ipharobotv4_wheel xyz_pose="-0.29462 0.163 0.0" rpy_pose="-1.570796 0 0" side1="left" side2="back" />
+
+    <!-- LIDAR -->
+    <xacro:ipharobotv4_lidar />
+
+    <!-- Camera -->
+    <xacro:ipharobotv4_zed_camera />
+
+    <!-- IMU Sensor-->
+    <xacro:ipharobotv4_imu />
+
+    <!-- Skid Steer Plugin-->
+    <xacro:ipharobotv4_skid_steer />
+
+    <!-- Joints plugin -->
+    <xacro:ipharobotv4_joints_state_publisher />
+
+
+</robot>

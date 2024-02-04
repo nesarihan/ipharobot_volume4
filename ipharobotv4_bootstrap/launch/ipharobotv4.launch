@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" default="ipharobotv4"/>
+    <arg name="set_lidar_frame_id" default="scan_link"/>
+
+    <include file="$(find ipharobotv4_bootstrap)/launch/ipharobotv4_core.launch">
+        <arg name="robot_name" value="$(arg robot_name)"/>
+    </include>
+    <include file="$(find ipharobotv4_bootstrap)/launch/ipharobotv4_lidar.launch">
+        <arg name="set_frame_id" value="$(arg set_lidar_frame_id)"/>
+    </include>
+    <node pkg="ipharobotv4_bootstrap" type="ipharobotv4_diagnostics" name="ipharobotv4_diagnostics" output="screen"/>
+</launch>

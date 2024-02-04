@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find ipharobotv4_simulation)/launch/raceway.launch"/>
+       
+  
+    <param name="robot_description" command="$(find xacro)/xacro $(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro"/>
+    
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" >
+        <param name="publish_frequency" type="double" value="50.0"/>
+    </node>  
+    
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"/>
+
+    <!-- Gmapping -->
+    <node pkg="gmapping" type="slam_gmapping" name="ipharobotv4_slam_gmapping" output="screen">
+        <param name="base_frame" value="robot_footprint"/>
+        <param name="odom_frame" value="odom"/>
+        <param name="map_frame"  value="map"/>
+        <rosparam command="load" file="$(find ipharobotv4_slam)/config/gmapping_params.yaml" />
+    </node>
+    
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find ipharobotv4_slam)/rviz/ipharobotv4_gmapping.rviz"/>
+
+    <node name="ipharobot_teleop" pkg="ipharobotv4_teleop" type="ipharobot_teleop_key" output="screen"/>
+    
+</launch>

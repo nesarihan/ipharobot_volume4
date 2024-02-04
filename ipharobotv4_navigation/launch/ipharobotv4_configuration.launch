@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- The package for ROS drivers of sensors... "sensor_node_type" with the type of the driver for your sensor, 
+    "sensor_node_name" with the desired name for your sensor node, and "sensor_param" with any parameters that your node might take. 
+    Note that if you have multiple sensors that you intend to use to send information to the navigation stack, you should launch all of them here. -->
+    <node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
+        <param name="sensor_param" value="param_value" />
+    </node>
+    <!-- Odometry for the base... we'll launch the odometry for the base. Once again, 
+    you'll need to replace the pkg, type, name, and param specifications with those relevant to the node that you're actually launching -->
+    <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">
+        <param name="odom_param" value="param_value" />
+    </node>
+    <!-- Configuration for the robot... we'll launch the odometry for the base. Once again, 
+    you'll need to replace the pkg, type, name, and param specifications with those relevant to the node that you're actually launching-->
+    <node pkg="transform_configuration_pkg" type="transform_configuration_type" name="transform_configuration_name" output="screen">
+        <param name="transform_configuration_param" value="param_value" />
+    </node>
+</launch>

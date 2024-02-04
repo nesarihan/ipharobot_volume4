@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch> 
+   <!-- values passed by command line input -->
+   <arg name="model" value="$(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro"/>
+   <arg name="gui" default="false" />
+
+   <!-- set these parameters on Parameter Server -->
+   <param name="robot_description" command="$(find xacro)/xacro $(find ipharobotv4_description)/urdf/ipharobotv4.urdf.xacro" />
+   <param name="use_gui" value="$(arg gui)" />
+
+   <!-- Send fake joint values-->
+   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+   <!-- Combine joint values-->
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+   <!-- Start only rviz node -->
+   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ipharobotv4_simulation)/rviz/urdf_multicamera.rviz" required="true"/> 
+</launch>
